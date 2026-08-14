@@ -107,3 +107,6 @@ InitTestScene*.unity*
 
 # Claude Code local settings
 .claude/
+
+# Local document backups (the .docx itself is version-controlled)
+*.bak

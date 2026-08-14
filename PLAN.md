@@ -41,6 +41,54 @@ explicitly under **Open Questions**.
   photoreal — aim for something in the Cities: Skylines / Farming
   Simulator register. Chosen because geographic recognizability of Lviv
   matters; accept the bigger art budget this implies.
+- **Vertical farming / crop growing: cut for now.** The worksheet's "Vertical
+  Farming & Gardening" block (plot placement, crop growth cycle, garden-to-
+  apiary forage synergy) is removed from scope for this pass. It was a second
+  full production chain — its own growth clock, its own harvest action, its own
+  economy — bolted onto a game whose core loop (hive → honey → sell → reinvest)
+  isn't playable yet. Cutting it is the answer to the worksheet's own cut-line
+  question ("if something has to give, what goes first"). Deferred, not
+  forbidden: if the apiary loop turns out to feel thin, crops are a known place
+  to add depth.
+- **Replaced by: buy-and-place furniture and garden pieces.** Instead of
+  growing things, the player *buys* them from a shop and places them. This
+  keeps the "make the place yours" feeling and the gold sink, at a fraction of
+  the cost — a catalog of static placeable props reuses the hive-placement
+  machinery (ghost preview, ground raycast, `EconomyManager.TrySpend`) rather
+  than needing a new simulation. Tradeoff: no growth/tending gameplay, so decor
+  is a one-time purchase decision, not an ongoing activity.
+- **Two item classes, split by a rule the player can learn.** Nectar/pollen
+  plants and water features are **functional** — they affect the bee sim.
+  Everything built (furniture) and every non-melliferous ornamental is **purely
+  cosmetic**. Shop entries carry a "bee-friendly" tag showing the bloom window,
+  so the split is legible rather than arbitrary. This doubles as the project's
+  real-world education hook: not every pretty flower actually feeds bees.
+  - *Functional — flower beds.* Each is one placeable object with a bloom
+    window on the in-game calendar plus a forage contribution inside a radius.
+    Recommended starter set, all real Ukrainian bee plants: willow/crocus (very
+    early spring, tiny yield, bridges the gap when colonies are weakest),
+    fruit blossom (spring), acacia/black locust (late spring, high yield, short
+    window), linden/lipa (early summer, high yield — and Lviv is full of them),
+    phacelia (fast, long window, the gap-filler), clover (steady mid-summer
+    baseline), sunflower (late summer, big yield), goldenrod (late season,
+    builds winter stores). Two numbers and a date range per item.
+  - *Functional — water.* A bee waterer, stone basin, or small pond. Bees
+    genuinely collect water to cool the hive and dilute honey for brood food.
+    Effect: reduces the summer heat penalty for hives in radius. All water
+    features are functional, including decorative-looking ones like a birdbath.
+  - *Functional — later, gated on weather.* Windbreak hedges (cut the wind
+    penalty on foraging) and shade trees only pay off if per-day weather
+    (Q7) lands. Hold them until that's decided.
+  - *Cosmetic.* All indoor furniture (mansion rebuild + apiary building
+    interior); outdoor garden furniture — benches, tables, hammock, fire pit,
+    fences, paths, gates, garden lamps; ornamental non-bee planting — hostas,
+    ferns, grasses, topiary, potted foliage; statues, signage, seasonal decor.
+- **Decor placement: owned land outdoors, building interiors indoors,
+  category-gated.** Garden pieces and garden furniture go on owned land; indoor
+  furniture goes inside the mansion and the apiary support building. The
+  categories don't cross — no sofa in the yard, no flower bed in the workshop.
+  Accepts a slightly less freeform builder in exchange for never having to
+  solve "does this indoor prop survive rain" or weather-proof every mesh.
 - **Real business names: genericized.** SoftServe HQ, McDonald's, ATB,
   Samsung service center, Nova Poshta, etc. keep their real locations/layout
   but get fictional equivalents in-game (generic tech office, generic

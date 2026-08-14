@@ -9,7 +9,8 @@ Already decided (see `PLAN.md`, not repeated here): perspective (hybrid
 sim + on-foot), setting (Sknyliv, Lviv), MVP area scope, art style
 (semi-realistic), bee breeds are real subspecies, brand names genericized,
 progression (milestone/career + sandbox after), time (accelerated),
-single-player, private/hobby project for now.
+single-player, private/hobby project for now, vertical farming cut in
+favour of a buy-and-place decor/garden shop.
 
 ## 1. Bees & Hive Biology
 
@@ -34,7 +35,9 @@ single-player, private/hobby project for now.
    foraging/health day to day, or only matter at the season level?
 8. Do bees actually need to path/fly visually between hive and flowers in
    the overview mode, or is foraging entirely abstracted (a range + a
-   flower-density number feeding a formula)?
+   flower-density number feeding a formula)? **Now blocks build:** the
+   decided flower-bed forage bonus (see `PLAN.md`) needs a concrete forage
+   model to feed into — a planted bed has to raise *something*.
 
 ## 2. Hive Management & On-Foot Interaction
 
@@ -134,12 +137,39 @@ single-player, private/hobby project for now.
     we've confirmed the MCP integration works), use free/purchased Unity
     Asset Store packs, or a mix depending on the asset?
 
-## 8. Scope Check-ins (revisit periodically)
+## 8. Decoration, Garden & Forage Objects
 
-39. Once the simulation core (hive + one breed + economy) is playable,
+Spawned by the decision to cut vertical farming and replace it with a
+buy-and-place decor/garden shop (see `PLAN.md`). The frame is settled; these
+are the parts it left open.
+
+39. The starter roster of forage plants and their bloom windows —
+    `PLAN.md` records a recommended set (willow/crocus, fruit blossom,
+    acacia, linden, phacelia, clover, sunflower, goldenrod) as the default.
+    Confirm, trim, or swap. Do the windows follow real Lviv bloom timing
+    (ties to Q24) or whatever paces best?
+40. How big is a flower bed's forage radius relative to a breed's foraging
+    range, and do overlapping beds stack, cap, or diminish? A stacking rule
+    that's too generous turns decor into the optimal strategy and makes hive
+    siting irrelevant.
+41. Do cosmetic items pay off in *any* non-visual way — a comfort/homeliness
+    score, milestone credit for the mansion rebuild — or literally nothing
+    but looks? "Nothing but looks" is defensible for a cozy sim, but then
+    furniture never competes with a hive for the same gold.
+42. Is the shop open from the start, or gated behind land ownership /
+    mansion progress / a milestone? Related: can decor be sold back or
+    moved after placing, or is a purchase permanent?
+43. Does the bee waterer interact with anything besides summer heat — e.g.
+    is water a *requirement* colonies suffer without, or purely a bonus?
+    The requirement version teaches real beekeeping harder but adds a
+    failure mode to explain.
+
+## 9. Scope Check-ins (revisit periodically)
+
+44. Once the simulation core (hive + one breed + economy) is playable,
     does the loop actually feel fun before more systems get piled on top?
     Worth an explicit "does this feel good" checkpoint before moving to
     on-foot mode or city geometry.
-40. At what point does "genericized real city" stop being worth the extra
+45. At what point does "genericized real city" stop being worth the extra
     modeling effort compared to a simpler fictional town — i.e. is there a
     fallback if city-scale modeling turns out to eat too much time?
