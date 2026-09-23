@@ -105,5 +105,9 @@ InitTestScene*.unity*
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
 
-# Claude Code local settings
-.claude/
+# Claude Code: agents, skills, hooks and shared settings are versioned;
+# personal permission allowlists stay local.
+.claude/settings.local.json
+
+# Local document backups (the .docx itself is version-controlled)
+*.bak

@@ -7,18 +7,48 @@ explicitly under **Open Questions**.
 
 ## Status
 
-- Unity: not yet installed; user will install Unity Hub + Editor themselves.
-- Project folder: `/home/yaroslavholovatyi/Desktop/bee-game/` (currently just
-  this plan + the map reference screenshot).
+- Unity 6 (`6000.5.4f1`, URP) installed; project scaffolded 2026-07-17 with
+  the hive, bee-breed and economy scripts.
+- Project folder: `/home/yaroslavholovatyi/Desktop/bee-game/`.
 
 ## Decisions made so far
 
-- **Gameplay loop: Hybrid.** A city-wide top-down/overview mode for placing
-  hives, watching bee routes, and running the economy, plus the ability to
-  drop into a walk-around 3rd-person view at any hive for hands-on
-  inspection/harvesting. This is the most flexible option but also the most
-  build-effort — expect the on-foot mode to come after the sim-mode core
-  loop is working, not in parallel.
+- **Perspective: on foot, in first person, most of the time.** Roughly 80%
+  of play is the player walking the apiary in first person — opening hives,
+  working frames, using the workbench, running errands. The pitch sells a
+  calm, hands-on ritual, and that lives on foot, so the game is built around
+  this mode. First-person rather than third-person because a solo project
+  can't afford an animated player body early: on screen it's hands and
+  tools, and frame close-ups come naturally. Tradeoffs: the player rarely
+  sees their own beekeeper, so appearance customization is worth less; and
+  the city is now mostly seen at eye level, not from above — the "whole
+  polygon, low detail" block-out below was chosen with a top-down camera in
+  mind, and extruded footprints hold up far worse up close. That raises the
+  art bar for any part of Sknyliv the player actually walks through (left
+  open in `QUESTIONS.md`). *(Decided 2026-09-23. Supersedes the earlier
+  "Gameplay loop: Hybrid" entry, which made a top-down city view home base
+  with 3rd-person drop-ins at each hive.)*
+- **Top-down view: unlocked late, by buying an in-game computer.** Once the
+  apiary is big enough, the player buys a computer, which opens a top-down
+  strategy view for automating and managing the apiary. The early game has
+  no top-down view at all — it's entirely on foot. This makes the overview a
+  progression reward rather than the default lens, and keeps the early game
+  focused on the hands-on work. Tradeoff: "automation", the thing this
+  unlock exists for, has no mechanical definition yet; until it does, the
+  unlock has no content. *(Decided 2026-09-23.)*
+- **First playable: the hive ritual, not the numbers loop.** The first build
+  that has to prove itself fun is one hive in a small yard, played on foot:
+  walk up, smoke it, open it, inspect a frame, harvest, sell, sleep. No city,
+  no placement map, one breed, one hive type. The fun-check should test what
+  the pitch is selling; a place/wait/harvest/sell loop with no on-foot part
+  would only prove that a number going up is satisfying to watch. The
+  existing `HiveController` / `EconomyManager` still run the simulation
+  underneath. Tradeoff: more up-front work before anything is playable (a
+  first-person controller, an interaction system, a hive that opens), and
+  the top-down plan in `plans/hive-placement.md` is shelved rather than
+  built next. How deep a frame inspection goes stays open (`QUESTIONS.md`
+  #12). *(Decided 2026-09-23. Replaces the earlier rule of building the
+  top-down sim core before any on-foot mode.)*
 - **Bee types: real-world subspecies.** Different breeds behave differently
   in-game, e.g.:
   - *Italian* — gentle, high honey yield, weaker winter survival
@@ -41,6 +71,54 @@ explicitly under **Open Questions**.
   photoreal — aim for something in the Cities: Skylines / Farming
   Simulator register. Chosen because geographic recognizability of Lviv
   matters; accept the bigger art budget this implies.
+- **Vertical farming / crop growing: cut for now.** The worksheet's "Vertical
+  Farming & Gardening" block (plot placement, crop growth cycle, garden-to-
+  apiary forage synergy) is removed from scope for this pass. It was a second
+  full production chain — its own growth clock, its own harvest action, its own
+  economy — bolted onto a game whose core loop (hive → honey → sell → reinvest)
+  isn't playable yet. Cutting it is the answer to the worksheet's own cut-line
+  question ("if something has to give, what goes first"). Deferred, not
+  forbidden: if the apiary loop turns out to feel thin, crops are a known place
+  to add depth.
+- **Replaced by: buy-and-place furniture and garden pieces.** Instead of
+  growing things, the player *buys* them from a shop and places them. This
+  keeps the "make the place yours" feeling and the gold sink, at a fraction of
+  the cost — a catalog of static placeable props reuses the hive-placement
+  machinery (ghost preview, ground raycast, `EconomyManager.TrySpend`) rather
+  than needing a new simulation. Tradeoff: no growth/tending gameplay, so decor
+  is a one-time purchase decision, not an ongoing activity.
+- **Two item classes, split by a rule the player can learn.** Nectar/pollen
+  plants and water features are **functional** — they affect the bee sim.
+  Everything built (furniture) and every non-melliferous ornamental is **purely
+  cosmetic**. Shop entries carry a "bee-friendly" tag showing the bloom window,
+  so the split is legible rather than arbitrary. This doubles as the project's
+  real-world education hook: not every pretty flower actually feeds bees.
+  - *Functional — flower beds.* Each is one placeable object with a bloom
+    window on the in-game calendar plus a forage contribution inside a radius.
+    Recommended starter set, all real Ukrainian bee plants: willow/crocus (very
+    early spring, tiny yield, bridges the gap when colonies are weakest),
+    fruit blossom (spring), acacia/black locust (late spring, high yield, short
+    window), linden/lipa (early summer, high yield — and Lviv is full of them),
+    phacelia (fast, long window, the gap-filler), clover (steady mid-summer
+    baseline), sunflower (late summer, big yield), goldenrod (late season,
+    builds winter stores). Two numbers and a date range per item.
+  - *Functional — water.* A bee waterer, stone basin, or small pond. Bees
+    genuinely collect water to cool the hive and dilute honey for brood food.
+    Effect: reduces the summer heat penalty for hives in radius. All water
+    features are functional, including decorative-looking ones like a birdbath.
+  - *Functional — later, gated on weather.* Windbreak hedges (cut the wind
+    penalty on foraging) and shade trees only pay off if per-day weather
+    (Q7) lands. Hold them until that's decided.
+  - *Cosmetic.* All indoor furniture (mansion rebuild + apiary building
+    interior); outdoor garden furniture — benches, tables, hammock, fire pit,
+    fences, paths, gates, garden lamps; ornamental non-bee planting — hostas,
+    ferns, grasses, topiary, potted foliage; statues, signage, seasonal decor.
+- **Decor placement: owned land outdoors, building interiors indoors,
+  category-gated.** Garden pieces and garden furniture go on owned land; indoor
+  furniture goes inside the mansion and the apiary support building. The
+  categories don't cross — no sofa in the yard, no flower bed in the workshop.
+  Accepts a slightly less freeform builder in exchange for never having to
+  solve "does this indoor prop survive rain" or weather-proof every mesh.
 - **Real business names: genericized.** SoftServe HQ, McDonald's, ATB,
   Samsung service center, Nova Poshta, etc. keep their real locations/layout
   but get fictional equivalents in-game (generic tech office, generic
@@ -98,7 +176,7 @@ Notable contents inside/near the border, north to south:
 
 - Unity version: latest LTS at install time (confirm once installed).
 - Render pipeline: URP — good stylized-visual support without HDRP's
-  overhead, works fine for both a top-down sim view and on-foot 3rd-person.
+  overhead, works fine for both on-foot first-person and a top-down sim view.
 - Suggested top-level folder structure once the Unity project exists:
   - `Assets/Scenes/` — CityOverview, OnFoot, (later) Menu
   - `Assets/Scripts/Simulation/` — hive, bee-colony, foraging, economy logic
@@ -130,8 +208,6 @@ All resolved (defaults chosen for a solo hobby project; easy to revisit):
 
 ## Next steps
 
-- Unity not yet installed — install Unity Hub + a recent LTS Editor version
-  (URP template) before scaffolding starts.
-- Once installed, scaffold the actual Unity project structure and start
-  with the simulation core (hive + single bee breed + basic economy) before
-  touching city geometry or the on-foot mode.
+- Build the first-playable hive-ritual slice (see "First playable" above):
+  one hive in a small yard, played on foot in first person — before city
+  geometry, hive placement, or the top-down view.
