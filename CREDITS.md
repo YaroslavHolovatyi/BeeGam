@@ -100,7 +100,9 @@ explicit rather than living in someone's memory.
 |---|---|---|---|
 | Sknyliv reference screenshot | `Part_Of_the_city.jpg` | Google Maps satellite view, screenshotted | **Reference only.** Google Maps imagery is not licensed for redistribution. Never ship, never trace-and-ship as a texture. |
 | District map reference | `map for game.png` | Map screenshot | **Reference only.** Same restriction. |
-| Hive & bee reference images | `imagesAndSoOn/` | Mixed / provenance not recorded | **Reference only.** Provenance unknown — treat as unusable in a build until each image is traced to a source and licence. |
+| District map with traced streets | `Untitled.png` | Google Maps satellite screenshot, target area outlined in red, streets traced in blue | **Reference only.** Same restriction. |
+| Hive & bee reference images | `imagesAndSoOn/` (except the renders below) | Mixed / provenance not recorded — bee photos, a size chart, a saved web page (`types of bees of Europe.html`), `My map.pdf` | **Reference only.** Provenance unknown — treat as unusable in a build until each image is traced to a source and licence. |
+| In-house renders | `imagesAndSoOn/beehivev1.0.png`, `beehivev2.0.png`, `beesv1.0-dorsal.png`, `beesv1.0-threequarter.png` | Rendered from `Assets/blender assets/Untitled.blend` (in-house) | Own work; no restriction. |
 | Mapped territory JSON | GDD worksheet, Appendix C | Derived from map reference | Data, not imagery — but the underlying survey is still third-party. |
 
 Real-world geography itself isn't copyrightable, so a hand-built recreation of

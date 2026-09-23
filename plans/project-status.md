@@ -126,9 +126,11 @@ Other project content:
   photos.
 - **Downloaded models:** none. Candidates are listed in `ASSET_SOURCES.md`
   and `plans/3d-models.md`.
-- **Map references** (never shipped): `Part_Of_the_city.jpg` (committed and
-  public on `main`), `map for game.png`, `Untitled.png`, `imagesAndSoOn/`
-  (these three not committed).
+- **Map and image references** (never shipped; R1 answered 2026-09-23 —
+  commit them): `Part_Of_the_city.jpg`,
+  `map for game.png`, `Untitled.png`, `imagesAndSoOn/` — all in the public
+  repo (the last three added 2026-09-23 at your request). `CREDITS.md` lists
+  each; only your own renders in `imagesAndSoOn/` are free of restrictions.
 
 ### 3.4 Tools and setup
 
@@ -143,7 +145,9 @@ Other project content:
   `tester`, `sim-balance`, `blender-artist`. **Skills:** `gdd`,
   `unity-script`.
 - **Git:** GitHub `YaroslavHolovatyi/BeeGam` (**public**). The working branch
-  is pushed and 5 commits ahead of `main`.
+  `docs/farming-cut-and-asset-sources` is pushed, not yet merged into `main`.
+  `.claude/` (agents, skills, hooks, shared settings) is versioned; only
+  `.claude/settings.local.json` stays local.
 
 ---
 
@@ -190,9 +194,7 @@ Other project content:
 7. **Three different maps** (W1): `PLAN.md`'s Google-Maps polygon, the GDD
    section 3 version with a mountain instead of the airport, and the
    AI-generated map in Appendix C.
-8. **`CREDITS.md`** marks all of `imagesAndSoOn/` as unknown provenance,
-   though it includes your own renders; `Untitled.png` isn't listed.
-9. **`README.md`** is a two-line stub.
+8. **`README.md`** is a two-line stub.
 
 ---
 
@@ -218,8 +220,8 @@ Other project content:
 8. **You — the fun checkpoint (S5):** play 3–5 in-game days with real
    models. Decide what comes next: deeper hive work, threats and seasons, or
    more hives and placement.
-9. **Housekeeping:** merge the branch into `main`, decide on the reference
-   images (R1–R3), tidy the GDD (R8).
+9. **Housekeeping:** merge the branch into `main`, decide whether the repo
+   and its reference images stay public (R2–R3), tidy the GDD (R8).
 
 ---
 
@@ -764,10 +766,6 @@ boring, what's missing? (Answer after the play-test.)
 - **Answer:**
 
 ### R — Repo & housekeeping
-
-**R1. Reference images:** keep them local (add to `.gitignore`), and commit
-only your own renders? Recommended: yes.
-- **Answer:**
 
 **R2. `Part_Of_the_city.jpg` (Google Maps imagery) is already public on
 `main`.** Leave it, or remove it? (Removing it from history needs a force
