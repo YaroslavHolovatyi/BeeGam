@@ -12,8 +12,8 @@ player buys an in-game computer. The first playable target is a one-hive,
 on-foot "hive ritual" slice (smoke, open, inspect a frame, harvest, sell);
 city geometry, hive placement and the top-down view come after it.
 
-The project is in early scaffold stage — only a handful of scripts exist.
-Design intent lives in the docs, not yet in code.
+The project is early: the first playable (the on-foot "hive ritual") is coded
+but not yet play-tested, and most design intent still lives in the docs.
 
 ## Source of truth for design
 
@@ -21,10 +21,34 @@ Design intent lives in the docs, not yet in code.
   and the tradeoff accepted. Read this before proposing gameplay/architecture.
 - **`QUESTIONS.md`** — a numbered *menu* of open design questions, grouped by
   area. "Unanswered" is a valid state; don't treat blanks as tasks.
+- **`plans/project-status.md`** — the hub: what exists, what doesn't, known
+  doc problems, next steps, and an **answer sheet** (section 7) gathering every
+  open question with a slot for the user's answer. When the user asks to
+  record their answers, use the `gdd` skill for each answered item, then
+  remove it from the answer sheet too. Keep sections 3–6 current when work
+  lands.
 - When the user settles a design question, use the **`gdd` skill** — it records
   the decision in `PLAN.md` and retires the question from `QUESTIONS.md` so the
   two stay consistent. Don't hand-edit these docs for design decisions; don't
   invent decisions the user only mused about.
+- **`BeeKeeper_GDD_Worksheet.docx`** — the user's large design worksheet; they
+  edit it in Word. Read its generated text copy,
+  **`BeeKeeper_GDD_Worksheet.md`** (~33k tokens, so read it on demand, not
+  every session). Never edit the `.md`; after the `.docx` changes, regenerate
+  it with `python3 .claude/scripts/gdd-to-markdown.py`. Its Appendices D–H are
+  *proposals*, not decisions — only what's in `PLAN.md` is decided.
+
+## Project documents loaded every session
+
+@plans/project-status.md
+@PLAN.md
+@QUESTIONS.md
+@plans/hive-ritual.md
+@plans/3d-models.md
+
+Not loaded automatically: `plans/hive-placement.md` (on hold — written for the
+old top-down-first design; don't execute it), `BeeKeeper_GDD_Worksheet.md`,
+`ASSET_SOURCES.md`, `CREDITS.md` (described below).
 
 ## Code architecture
 
@@ -36,12 +60,22 @@ No assembly definitions — everything compiles into `Assembly-CSharp` (or
   resistance/cold tolerance/foraging range. Breeds are real subspecies (Italian,
   Carniolan, Buckfast, Russian) and are meant to be *data, not code* — new
   breeds should be new `.asset` files, not new classes.
-- `Assets/Scripts/Simulation/` — `MonoBehaviour` runtime logic. `HiveController`
-  accumulates honey from breed × population × health; `EconomyManager` is a
-  singleton (`Instance`) holding gold and honey price with `SellHoney`/`TrySpend`.
+- `Assets/Scripts/Simulation/` — `MonoBehaviour` runtime logic. `GameClock`
+  owns in-game time; `HiveTicker` steps every registered `HiveController` on a
+  fixed in-game interval; `HiveController` accumulates honey from breed ×
+  population × health in daylight; `EconomyManager` is a singleton
+  (`Instance`) holding gold and honey price with `SellHoney`/`TrySpend`.
+- `Assets/Scripts/OnFoot/` — the first-person player and everything they use:
+  `FirstPersonController`, `PlayerInteractor` + the `Interactable` base
+  (E = Interact, F = Secondary), `HiveInteraction`, `HiveFrame`, `Smoker`,
+  `SleepSpot`, `HoneyStand`, `PlayerInventory`.
+- `Assets/Scripts/UI/` — `PlayerHud`.
+- `Assets/Scripts/Editor/` — `HiveRitualSceneBuilder` (menu **BeeKeeper →
+  Build Hive Ritual Scene** generates `Assets/Scenes/HiveRitual.unity` from
+  placeholder primitives; regenerating overwrites hand edits to that scene).
 
-Add a new sibling folder (`Assets/Scripts/UI/`, `Assets/Scripts/City/`) for a
-genuinely different concern rather than overloading Data/Simulation.
+Add a new sibling folder (e.g. `Assets/Scripts/City/`) for a genuinely
+different concern rather than overloading an existing one.
 
 **Before writing or changing anything under `Assets/Scripts`, use the
 `unity-script` skill** — it carries the house style and the rules that prevent
@@ -50,9 +84,9 @@ real breakage (serialization, `.meta`/GUID safety, per-frame cost). Key ones:
 - Never casually rename/retype a public serialized field — field names are the
   serialization keys in `.asset`/`.unity` files; a rename silently zeroes every
   hive in every scene. Use `[FormerlySerializedAs]` if a rename is truly needed.
-- Nothing that scales with hive count belongs in `Update()`. `HiveController`
-  currently ticks per-frame, but the design targets a city full of hives —
-  prefer a central ticker on a fixed in-game-time interval as sim grows.
+- Nothing that scales with hive count belongs in `Update()`. Hive simulation
+  runs through `HiveTicker` on in-game time; per-hive visuals use coroutines
+  that only run while animating. Keep it that way as the sim grows.
 - Scale rates by *in-game* time (accelerated time is a design decision), not raw
   wall-clock `Time.deltaTime`.
 
