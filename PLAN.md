@@ -7,18 +7,48 @@ explicitly under **Open Questions**.
 
 ## Status
 
-- Unity: not yet installed; user will install Unity Hub + Editor themselves.
-- Project folder: `/home/yaroslavholovatyi/Desktop/bee-game/` (currently just
-  this plan + the map reference screenshot).
+- Unity 6 (`6000.5.4f1`, URP) installed; project scaffolded 2026-07-17 with
+  the hive, bee-breed and economy scripts.
+- Project folder: `/home/yaroslavholovatyi/Desktop/bee-game/`.
 
 ## Decisions made so far
 
-- **Gameplay loop: Hybrid.** A city-wide top-down/overview mode for placing
-  hives, watching bee routes, and running the economy, plus the ability to
-  drop into a walk-around 3rd-person view at any hive for hands-on
-  inspection/harvesting. This is the most flexible option but also the most
-  build-effort — expect the on-foot mode to come after the sim-mode core
-  loop is working, not in parallel.
+- **Perspective: on foot, in first person, most of the time.** Roughly 80%
+  of play is the player walking the apiary in first person — opening hives,
+  working frames, using the workbench, running errands. The pitch sells a
+  calm, hands-on ritual, and that lives on foot, so the game is built around
+  this mode. First-person rather than third-person because a solo project
+  can't afford an animated player body early: on screen it's hands and
+  tools, and frame close-ups come naturally. Tradeoffs: the player rarely
+  sees their own beekeeper, so appearance customization is worth less; and
+  the city is now mostly seen at eye level, not from above — the "whole
+  polygon, low detail" block-out below was chosen with a top-down camera in
+  mind, and extruded footprints hold up far worse up close. That raises the
+  art bar for any part of Sknyliv the player actually walks through (left
+  open in `QUESTIONS.md`). *(Decided 2026-09-23. Supersedes the earlier
+  "Gameplay loop: Hybrid" entry, which made a top-down city view home base
+  with 3rd-person drop-ins at each hive.)*
+- **Top-down view: unlocked late, by buying an in-game computer.** Once the
+  apiary is big enough, the player buys a computer, which opens a top-down
+  strategy view for automating and managing the apiary. The early game has
+  no top-down view at all — it's entirely on foot. This makes the overview a
+  progression reward rather than the default lens, and keeps the early game
+  focused on the hands-on work. Tradeoff: "automation", the thing this
+  unlock exists for, has no mechanical definition yet; until it does, the
+  unlock has no content. *(Decided 2026-09-23.)*
+- **First playable: the hive ritual, not the numbers loop.** The first build
+  that has to prove itself fun is one hive in a small yard, played on foot:
+  walk up, smoke it, open it, inspect a frame, harvest, sell, sleep. No city,
+  no placement map, one breed, one hive type. The fun-check should test what
+  the pitch is selling; a place/wait/harvest/sell loop with no on-foot part
+  would only prove that a number going up is satisfying to watch. The
+  existing `HiveController` / `EconomyManager` still run the simulation
+  underneath. Tradeoff: more up-front work before anything is playable (a
+  first-person controller, an interaction system, a hive that opens), and
+  the top-down plan in `plans/hive-placement.md` is shelved rather than
+  built next. How deep a frame inspection goes stays open (`QUESTIONS.md`
+  #12). *(Decided 2026-09-23. Replaces the earlier rule of building the
+  top-down sim core before any on-foot mode.)*
 - **Bee types: real-world subspecies.** Different breeds behave differently
   in-game, e.g.:
   - *Italian* — gentle, high honey yield, weaker winter survival
@@ -146,7 +176,7 @@ Notable contents inside/near the border, north to south:
 
 - Unity version: latest LTS at install time (confirm once installed).
 - Render pipeline: URP — good stylized-visual support without HDRP's
-  overhead, works fine for both a top-down sim view and on-foot 3rd-person.
+  overhead, works fine for both on-foot first-person and a top-down sim view.
 - Suggested top-level folder structure once the Unity project exists:
   - `Assets/Scenes/` — CityOverview, OnFoot, (later) Menu
   - `Assets/Scripts/Simulation/` — hive, bee-colony, foraging, economy logic
@@ -178,8 +208,6 @@ All resolved (defaults chosen for a solo hobby project; easy to revisit):
 
 ## Next steps
 
-- Unity not yet installed — install Unity Hub + a recent LTS Editor version
-  (URP template) before scaffolding starts.
-- Once installed, scaffold the actual Unity project structure and start
-  with the simulation core (hive + single bee breed + basic economy) before
-  touching city geometry or the on-foot mode.
+- Build the first-playable hive-ritual slice (see "First playable" above):
+  one hive in a small yard, played on foot in first person — before city
+  geometry, hive placement, or the top-down view.

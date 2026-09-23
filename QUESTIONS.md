@@ -5,8 +5,10 @@ locked in `PLAN.md`. No need to answer all of these at once, or ever —
 treat it as a menu. Answer whatever you have opinions on; anything left
 blank just gets a sensible default when it's time to build that part.
 
-Already decided (see `PLAN.md`, not repeated here): perspective (hybrid
-sim + on-foot), setting (Sknyliv, Lviv), MVP area scope, art style
+Already decided (see `PLAN.md`, not repeated here): perspective (first
+person on foot most of the time; top-down view unlocked later by buying an
+in-game computer), first playable (an on-foot, one-hive "hive ritual"
+slice), setting (Sknyliv, Lviv), MVP area scope, art style
 (semi-realistic), bee breeds are real subspecies, brand names genericized,
 progression (milestone/career + sandbox after), time (accelerated),
 single-player, private/hobby project for now, vertical farming cut in
@@ -166,10 +168,40 @@ are the parts it left open.
 
 ## 9. Scope Check-ins (revisit periodically)
 
-44. Once the simulation core (hive + one breed + economy) is playable,
-    does the loop actually feel fun before more systems get piled on top?
-    Worth an explicit "does this feel good" checkpoint before moving to
-    on-foot mode or city geometry.
+44. Once the first-playable hive-ritual slice (see `PLAN.md`) works, does
+    it actually feel fun before more systems get piled on top? Worth an
+    explicit "does this feel good" checkpoint before moving to hive
+    placement, city geometry, or the breed/hive rosters.
 45. At what point does "genericized real city" stop being worth the extra
     modeling effort compared to a simpler fictional town — i.e. is there a
     fallback if city-scale modeling turns out to eat too much time?
+
+## 10. First-Person Play & the Computer
+
+Spawned by the perspective decision (see `PLAN.md`): first person on foot
+most of the time, top-down only after buying an in-game computer, and an
+on-foot hive-ritual slice as the first playable. Numbered after section 9
+so existing question numbers don't shift.
+
+46. What does automation actually do once the computer is bought — harvest
+    without the player, treat disease, feed for winter, or only surface
+    alerts while the player still does the work by hand? And afterwards,
+    does anything still require going on foot (breeding, catching swarms,
+    repairs)? The whole top-down unlock exists for this, and it's currently
+    undefined.
+47. What gates buying the computer — a hive count, a milestone, or just its
+    price?
+48. Before the computer, there's no overview. How does the player know a
+    hive needs attention — walking the rounds and checking each one,
+    in-world cues (the hum, activity at the entrance), a notebook/phone
+    list, or nothing until the hive is opened? Ties into HUD philosophy
+    (#32).
+49. How does placing a hive or a decor piece work in first person — a ghost
+    preview where the crosshair meets the ground, carrying the item and
+    setting it down, or a build menu? The decor decision in `PLAN.md`
+    reuses the hive-placement machinery, so one answer covers both.
+50. The "whole polygon, low detail" block-out was chosen with a top-down
+    camera in mind; seen mostly at eye level, extruded footprints hold up
+    much worse. Does the walkable area shrink to a smaller, detailed zone
+    with the rest as distant backdrop, does low detail stay acceptable, or
+    does this bring the fictional-town fallback (#45) closer?

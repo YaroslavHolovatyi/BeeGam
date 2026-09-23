@@ -6,10 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Unity 6 (`6000.5.4f1`, URP) beekeeping simulator, solo hobby project. The
 game recreates a genericized ~2 km slice of Lviv's Sknyliv district where the
-player runs an apiary. Two-mode loop: a top-down city/sim view for placing
-hives and running the economy, plus a walk-around on-foot mode for hands-on
-hive inspection. The sim core (hive + one breed + economy) is being built
-first; city geometry and on-foot mode come later.
+player runs an apiary. Played mostly on foot in first person (hands-on hive
+work around the apiary); a top-down management view unlocks later, when the
+player buys an in-game computer. The first playable target is a one-hive,
+on-foot "hive ritual" slice (smoke, open, inspect a frame, harvest, sell);
+city geometry, hive placement and the top-down view come after it.
 
 The project is in early scaffold stage — only a handful of scripts exist.
 Design intent lives in the docs, not yet in code.
